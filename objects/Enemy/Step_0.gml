@@ -4,41 +4,35 @@ key_up = keyboard_check(vk_up)
 key_down = keyboard_check(vk_down)
 
 if(isPlayer)
-{
-	if(hsp != 3)
-	{
-		hsp = 3
-	}
-	if(vsp != 3)
-	{
-		vsp = 3
-	}
-		if(key_left == 1 && key_right == 0)
-	{
-		hspeed = -hsp
-	}
-	else if(key_left == 0 && key_right == 1)
-	{
-		hspeed = hsp
-	}
-	else
-	{
-		hspeed = 0
-	}
+{	
+	var movement_acceleration = 0.4;
+	var maximum_speed = 3;
+	var movement_friction = 0.25;
+	var movement_x = key_right - key_left;
+	var movement_y = key_down - key_up;
 
-	if(key_up == 1 && key_down == 0)
-	{
-		vspeed = -vsp
+	if (movement_x != 0) {
+		hsp += movement_x * movement_acceleration;
+		hsp = clamp(hsp, -maximum_speed, maximum_speed);
+	} else {
+		if (abs(hsp) <= movement_friction) {
+			hsp = 0;
+		} else {
+			hsp -= sign(hsp) * movement_friction;
+		}
 	}
-	else if(key_up == 0 && key_down == 1)
-	{
-		vspeed = vsp
+	if (movement_y != 0) {
+		vsp += movement_y * movement_acceleration;
+		vsp = clamp(vsp, -maximum_speed, maximum_speed);
+	} else {
+		if (abs(vsp) <= movement_friction) {
+			vsp = 0;
+		} else {
+			vsp -= sign(vsp) * movement_friction;
+		}
 	}
-	else
-	{
-		vspeed = 0
-
-	}
+	hspeed = hsp;
+	vspeed = vsp;
 }
 else
 {

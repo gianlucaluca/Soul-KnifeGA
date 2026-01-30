@@ -2,5 +2,5 @@
 
 isPlayer = true
 
-hsp = 3;
-vsp = 3;
+hsp = 0;
+vsp = 0;
